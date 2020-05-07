@@ -8,7 +8,6 @@ export default ({ data }) => {
 
   return <Layout>
     <div>
-      <h1>My Site's Files</h1>
       {
         blogs.map(({node: { id, frontmatter: { title, date }, fields: { slug }, excerpt }}) => {
           return <BlogCard
