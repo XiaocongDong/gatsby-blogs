@@ -16,6 +16,7 @@ const StyledHeader = styled.header`
   ${tw`fixed top-0 left-0 right-0 h-20 shadow-xs `}
   ${tw`flex items-center justify-between`}
   ${tw`font-medium text-3xl`}
+  ${tw`bg-white`}
   padding: 0 10vw;
 `
 
