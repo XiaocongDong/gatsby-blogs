@@ -8,23 +8,32 @@ const Card = styled.div`
 `
 
 const StyledTitle = styled(Link)`
-  ${tw`text-2xl font-semibold pb-3`}
-`
-
-const StyledDate = styled.div`
-  ${tw`text-gray-400`}
+  ${tw`text-2xl font-medium`}
 `
 
 const StyledExcerpt = styled.p`
-  ${tw`text-lg text-gray-600 mb-4`}
+  ${tw`text-xl text-gray-700 mb-4`}
 `
 
-export default (props) => {
+export default ({ slug, title, date, excerpt, tags, categories }) => {
+  tags = tags || []
+  categories = categories || []
+
   return (
     <Card>
-      <StyledTitle to={props.slug}>{props.title}</StyledTitle>
-      <StyledDate>{props.date}</StyledDate>
-      <StyledExcerpt>{props.excerpt}</StyledExcerpt>
+      <StyledTitle to={slug}>{title}</StyledTitle>
+      <div className="flex text-gray-500 pt-2 pb-1">
+        <div className="mr-2">{date}</div>
+        <div className="flex">
+        {
+          categories.map(category => <div key={category} className="mr-1 last:mr-2">{category}</div>)
+        }
+        </div>
+        {
+          tags.map(tag => <div key={tag} className="mr-1">#{tag}</div>)
+        }
+      </div>
+      <StyledExcerpt>{excerpt}</StyledExcerpt>
     </Card>
   )
 }

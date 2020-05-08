@@ -1,7 +1,11 @@
 ---
 title: JavaScript小技巧 - 数组篇
-tags: JavaScript
-date: 2019-12-11 17:32:16
+tags: 
+  - JavaScript
+  - Array
+categories:
+  - JavaScript
+date: 2019-12-11
 ---
 
 本文整理了一些在日常工作可以用到的JavaScript数组小技巧

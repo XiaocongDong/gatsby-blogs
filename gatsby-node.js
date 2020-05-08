@@ -4,8 +4,13 @@ const path = require('path')
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
   if (node.internal.type === `MarkdownRemark`) {
+    let slug = createFilePath({ node, getNode, basePath: 'blogs' })
+    const dateStr = node.frontmatter.date
+    if (dateStr) {
+      const date = new Date(dateStr)
+      slug = `/${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}` + slug
+    }
 
-    const slug = createFilePath({ node, getNode, basePath: 'blogs' })
     createNodeField({
       node,
       name: `slug`,
@@ -32,11 +37,12 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
   
   result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    const { slug } = node.fields
     createPage({
-      path: node.fields.slug,
+      path: slug,
       component: path.resolve(`./src/templates/blog-post.js`),
       context: {
-        slug: node.fields.slug
+        slug
       }
     })
   })
