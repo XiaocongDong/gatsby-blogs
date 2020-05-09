@@ -1,5 +1,5 @@
 ---
-title: "VirtualBox虚拟机运行Ubuntu如何不卡"
+title: "2011年12月24日只言片语"
 date: "2017-08-10"
 tags:
   - abc

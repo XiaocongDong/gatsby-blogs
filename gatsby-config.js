@@ -9,6 +9,10 @@ module.exports = {
     title: 'Title from siteMetadata'
   },
   plugins: [
+    `gatsby-transformer-remark`,
+    `gatsby-plugin-tailwindcss`,
+    `gatsby-plugin-postcss`,
+    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -16,20 +20,11 @@ module.exports = {
         path: `${__dirname}/src/blogs`
       }
     },
-    // {
-    //   resolve: `gatsby-plugin-typography`,
-    //   options: {
-    //     pathToConfigModule: `src/utils/typography`,
-    //   }
-    // },
     {
       resolve: `gatsby-plugin-styled-components`,
       options: {
         // Add any options here
       }
-    },
-    `gatsby-transformer-remark`,
-    `gatsby-plugin-tailwindcss`,
-    `gatsby-plugin-postcss`
+    }
   ]
 }

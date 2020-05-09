@@ -12,7 +12,7 @@ export default () => {
             html
             tableOfContents
             timeToRead
-            excerpt
+            excerpt(format: HTML)
             fields {
               slug
             }
@@ -20,7 +20,6 @@ export default () => {
               title
               date(fromNow: true, locale: "zh-cn")
               tags
-              categories
             }
           }
         }
@@ -37,8 +36,7 @@ export default () => {
             frontmatter: {
               title,
               date,
-              tags,
-              categories
+              tags
             },
             fields: { 
               slug 
@@ -53,7 +51,6 @@ export default () => {
             date={date}
             excerpt={excerpt}
             tags={tags}
-            categories={categories}
           />
         })
       }

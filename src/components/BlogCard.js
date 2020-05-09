@@ -15,9 +15,8 @@ const StyledExcerpt = styled.p`
   ${tw`text-xl text-gray-700 mb-4`}
 `
 
-export default ({ slug, title, date, excerpt, tags, categories }) => {
+export default ({ slug, title, date, excerpt, tags }) => {
   tags = tags || []
-  categories = categories || []
 
   return (
     <Card>
@@ -25,15 +24,14 @@ export default ({ slug, title, date, excerpt, tags, categories }) => {
       <div className="flex text-gray-500 pt-2 pb-1">
         <div className="mr-2">{date}</div>
         <div className="flex">
-        {
-          categories.map(category => <div key={category} className="mr-1 last:mr-2">{category}</div>)
-        }
         </div>
         {
-          tags.map(tag => <div key={tag} className="mr-1">#{tag}</div>)
+          tags.map(tag => <Link key={tag} className="mr-1" to={`/tags/${tag}`}>#{tag}</Link>)
         }
       </div>
-      <StyledExcerpt>{excerpt}</StyledExcerpt>
+      <StyledExcerpt
+        dangerouslySetInnerHTML={{__html: excerpt}}
+      />
     </Card>
   )
 }

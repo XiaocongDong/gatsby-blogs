@@ -34,8 +34,8 @@ export default ({ children }) => {
         </Link>
         <ul className="flex">
           <ListLink to="/">博客</ListLink>
+          <ListLink to="/tags">标签</ListLink>
           <ListLink to="/about">关于</ListLink>
-          <ListLink to="/contact">联系我</ListLink>
         </ul>
       </StyledHeader>
       <StyledContent>
