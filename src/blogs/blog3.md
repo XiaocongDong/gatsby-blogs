@@ -110,4 +110,4 @@ Ubuntu安装完毕
 
 相关阅读：《VirtualBox虚拟机运行Ubuntu如何不卡》
 
-![This is huge](../images/abc.jpeg)
+![This is huge](../images/blogs/abc.jpeg)
