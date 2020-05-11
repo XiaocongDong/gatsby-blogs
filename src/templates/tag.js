@@ -5,7 +5,7 @@ import { Link } from 'gatsby'
 export default ({ pageContext }) => {
   const { posts, tagName } = pageContext
   const len = posts.length
-  console.log(posts)
+
   return (
     <Layout>
       <div>关于{tagName}的标签有{len}个</div>

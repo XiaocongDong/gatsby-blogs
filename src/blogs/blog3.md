@@ -1,5 +1,5 @@
 ---
-title: "2011年12月24日只言片语"
+title: "2011年12月24日只言片语ss"
 date: "2017-08-10"
 tags:
   - abc
@@ -109,3 +109,5 @@ Ubuntu安装完毕
 恭喜你！至此，Ubuntu已经成功安装到你创建的VirtualBox虚拟机中。在VirtualBox中启动该虚拟机，开始体验Ubuntu吧。
 
 相关阅读：《VirtualBox虚拟机运行Ubuntu如何不卡》
+
+![This is huge](../images/abc.jpeg)

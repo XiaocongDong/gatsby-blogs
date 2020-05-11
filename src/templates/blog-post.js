@@ -13,7 +13,7 @@ const StyledTableOfContent = styled.div`
 
 export default ({ data, pageContext }) => {
   const post = data.markdownRemark
-  console.log(pageContext)
+
   const { prev, next } = pageContext
   return <Layout>
     <Helmet title={post.frontmatter.title}/>
