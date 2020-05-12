@@ -1,36 +1,47 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import styled from 'styled-components'
-import tw from 'twin.macro'
+// import styled from 'styled-components'
+// import tw from 'twin.macro'
 import { Helmet } from 'react-helmet'
 import Layout from '../components/Layout'
+import { MDXProvider } from '@mdx-js/react'
+import { MDXRenderer } from 'gatsby-plugin-mdx'
 
-const StyledTableOfContent = styled.div`
-  li {
-    ${tw`text-gray-600 hover:text-gray-900 mb-1`}
-  }
-`
+import { Header1, Header2, Header3 } from '../components/MD/Header'
+import CodeBlock from '../components/MD/CodeBlock'
+import { UL, LI } from '../components/MD/List'
+import P from '../components/MD/P'
 
 export default ({ data, pageContext }) => {
-  const post = data.markdownRemark
+  const post = data.mdx
 
   const { prev, next } = pageContext
   return <Layout>
     <Helmet title={post.frontmatter.title}/>
-    <h1>{post.frontmatter.title}</h1>
-    <div className="flex">
-      <div
+    <h1 className="font-bold text-4xl">{post.frontmatter.title}</h1>
+    <div>
+      {/* <div
         className="markdown flex-grow"
         dangerouslySetInnerHTML={{ __html: post.html}}
-      />
-      <div className="w-1/4 flex-shrink-0 pl-8">
-        <div className="text-lg">本章内容</div>
-        <StyledTableOfContent
-          dangerouslySetInnerHTML={{__html: post.tableOfContents}}
-        />
-      </div>
+      /> */}
+      <MDXProvider
+        components={{
+          h1: Header1,
+          h2: Header2,
+          h3: Header3,
+          ul: UL,
+          li: LI,
+          code: CodeBlock,
+          p: P
+        }}
+      >
+        <MDXRenderer
+        >
+          {post.body}
+        </MDXRenderer>
+      </MDXProvider>
     </div>
-    <div className="flex">
+    <div className="flex mt-1">
       {prev && <div>{prev.frontmatter.title}</div>}
       {next && <div>{next.frontmatter.title}</div>}
     </div>
@@ -39,12 +50,13 @@ export default ({ data, pageContext }) => {
 
 export const query = graphql`
   query($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug }}) {
-      html
-      tableOfContents
+    mdx(fields: { slug: { eq: $slug }}) {
+      excerpt
       frontmatter {
         title
+        date
       }
+      body
     }
   }
 `

@@ -19,7 +19,7 @@ export default ({ data }) => {
 
 export const query = graphql`
   {
-    tags: allMarkdownRemark(sort: {fields: [frontmatter___date], order: DESC}) {
+    tags: allMdx(sort: {fields: [frontmatter___date], order: DESC}) {
       group(field: frontmatter___tags) {
         name: fieldValue
         totalCount

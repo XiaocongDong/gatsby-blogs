@@ -6,7 +6,7 @@ import Layout from '../components/Layout'
 import Img from 'gatsby-image'
 
 export default ({ data, pageContext }) => {
-  const posts = data.allMarkdownRemark.edges
+  const posts = data.allMdx.edges
   const image = data.file.childImageSharp
   const { numPages, currentPage } = pageContext
 
@@ -77,7 +77,7 @@ export default ({ data, pageContext }) => {
 
 export const query = graphql`
   query($skip: Int!, $limit: Int!) {
-    allMarkdownRemark(
+    allMdx(
       sort: { fields: [frontmatter___date], order: DESC }
       limit: $limit
       skip: $skip

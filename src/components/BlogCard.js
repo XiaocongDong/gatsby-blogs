@@ -8,7 +8,7 @@ const Card = styled.div`
 `
 
 const StyledTitle = styled(Link)`
-  ${tw`text-2xl font-medium`}
+  ${tw`text-3xl font-bold`}
 `
 
 const StyledExcerpt = styled.p`

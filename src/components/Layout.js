@@ -15,7 +15,7 @@ const Content = styled.div`
 const StyledHeader = styled.header`
   ${tw`fixed top-0 left-0 right-0 h-20 shadow-xs `}
   ${tw`flex items-center justify-between`}
-  ${tw`font-medium text-3xl`}
+  ${tw`font-medium text-3xl font-bold`}
   ${tw`bg-white`}
   padding: 0 10vw;
 `
@@ -30,7 +30,7 @@ export default ({ children }) => {
     <Content>
       <StyledHeader>
         <Link to="/" style={{ textShadow: 'none', backgroundImage: 'none' }}>
-          <h3 style={{ display: 'inline' }}>Sean Dong</h3>
+          <h3 style={{ display: 'inline' }}>进击的大葱</h3>
         </Link>
         <ul className="flex">
           <ListLink to="/">博客</ListLink>

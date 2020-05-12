@@ -5,14 +5,14 @@ import BlogCard from '../components/BlogCard'
 export default () => {
   const data = useStaticQuery(graphql`
     query {
-      allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+      allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
         edges {
           node {
             id
             html
             tableOfContents
             timeToRead
-            excerpt(format: HTML)
+            excerpt
             fields {
               slug
             }
@@ -25,7 +25,7 @@ export default () => {
         }
       }
     }`)
-  const blogs = data.allMarkdownRemark.edges
+  const blogs = data.allMdx.edges
   
   return (
     <div>

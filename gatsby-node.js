@@ -30,19 +30,33 @@ const createTagPages = (createPage, posts) => {
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
-  if (node.internal.type === `MarkdownRemark`) {
-    let slug = createFilePath({ node, getNode, basePath: 'blogs' })
-    const dateStr = node.frontmatter.date
-    if (dateStr) {
-      const date = new Date(dateStr)
-      slug = `/${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}` + slug
-    }
 
-    createNodeField({
-      node,
-      name: `slug`,
-      value: slug
-    })
+  if (node.internal.type === 'Mdx') {
+    const { sourceInstanceName } = getNode(node.parent)
+
+    let slug = ''
+    switch (sourceInstanceName) {
+      case 'blogs':
+        slug = createFilePath({ node, getNode, basePath: 'blogs' })
+        const dateStr = node.frontmatter.date
+        if (dateStr) {
+          const date = new Date(dateStr)
+          slug = `/${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}` + slug
+        }
+
+        createNodeField({
+          node,
+          name: 'slug',
+          value: slug
+        })
+        createNodeField({
+          node,
+          name: 'type',
+          value: 'blog'
+        })
+      default:
+        break
+    }
   }
 }
 
@@ -51,10 +65,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const result = await graphql(`
     query {
-      allMarkdownRemark(
-        sort: { fields: [frontmatter___date], order: DESC }
-        limit: 2000
-      ) {
+      allMdx {
         edges {
           node {
             id
@@ -64,6 +75,7 @@ exports.createPages = async ({ graphql, actions }) => {
             }
             fields {
               slug
+              type
             }
           }
         }
@@ -71,24 +83,26 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
   
-  const posts = result.data.allMarkdownRemark.edges
-  const postsPerPage = 6
-  const numPages = Math.ceil(posts.length / postsPerPage)
+  const blogs = result.data.allMdx.edges.filter(edge => edge.node.fields.type == 'blog')
+  const blogsPerPage = 6
+  const numPages = Math.ceil(blogs.length / blogsPerPage)
 
+  // generate blog list
   Array.from({ length: numPages }).forEach((_, i) => {
     createPage({
       path: i === 0 ? `/` : `blogs/${i + 1}`,
       component: path.resolve(`./src/templates/blog-list.js`),
       context: {
-        limit: postsPerPage,
-        skip: i * postsPerPage,
+        limit: blogsPerPage,
+        skip: i * blogsPerPage,
         numPages,
         currentPage: i + 1
       }
     })
   })
+
   // generate blog post
-  posts.forEach(({ node }, index) => {
+  blogs.forEach(({ node }, index) => {
     const { slug } = node.fields
 
     createPage({
@@ -96,12 +110,12 @@ exports.createPages = async ({ graphql, actions }) => {
       component: path.resolve(`./src/templates/blog-post.js`),
       context: {
         slug,
-        prev: index === 0 ? null : posts[index - 1].node,
-        next: index === posts.length - 1? null : posts[index + 1].node
+        prev: index === 0 ? null : blogs[index - 1].node,
+        next: index === blogs.length - 1? null : blogs[index + 1].node
       }
     })
   })
 
   // generate tag detail page
-  createTagPages(createPage, posts)
+  createTagPages(createPage, blogs)
 }

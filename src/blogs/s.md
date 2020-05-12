@@ -16,7 +16,7 @@ const uniqueArr = [...new Set(arr)]
 console.log(uniqueArr)
 // [1, 2, 3, 4, 7]
 ```
-<!-- more --> 
+
 # 某一个位置插入元素
 改变原数组
 ```javascript
@@ -121,6 +121,3 @@ const sum = nums.reduce((currSum, num) => currSum + num)
 console.log(sum)
 // 15
 ```
-## 个人技术动态
-欢迎关注公众号**进击的大葱**一起学习成长
-![](/images/wechat_qr.jpg)
