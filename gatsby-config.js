@@ -9,12 +9,25 @@ module.exports = {
     title: 'Title from siteMetadata'
   },
   plugins: [
-    `gatsby-plugin-tailwindcss`,
-    `gatsby-plugin-postcss`,
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    `gatsby-plugin-styled-components`,
+    {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        name: '进击的大葱的个人博客',
+        short_name: '进击的大葱',
+        start_url: '/blogs',
+        background_color: '#fff',
+        theme_color: '#3273DC',
+      }
+    },
+    {
+      resolve: `gatsby-plugin-styled-components`,
+      options: {
+        displayName: true
+      }
+    },
     {
       resolve: `gatsby-plugin-mdx`,
       options: {

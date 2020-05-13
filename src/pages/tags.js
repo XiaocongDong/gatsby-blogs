@@ -1,19 +1,32 @@
 import React from 'react'
-import { graphql, Link } from 'gatsby'
+import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
+import Link from '../components/Link'
+import styled from 'styled-components'
+
+const Container = styled.div`
+`
+
+const StyledLink = styled(Link)`
+  background-color: ${props => props.theme.color.blue};
+  color: white;
+  border-radius: 2px;
+  padding: 2px;
+  margin-right: 2px;
+`
 
 export default ({ data }) => {
   const { tags } = data
 
   return <Layout>
-    <ul>
+    <Container>
       {
-        tags.group.map(tag => <Link key={tag.name} to={`/tags/${tag.name}`}>
+        tags.group.map(tag => <StyledLink key={tag.name} to={`/tags/${tag.name}`}>
           {tag.name}: {tag.totalCount}
-        </Link>
+        </StyledLink>
         )
       }  
-    </ul>
+    </Container>
   </Layout>
 }
 

@@ -1,26 +1,71 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import { graphql, Link } from 'gatsby'
+import { graphql } from 'gatsby'
+import Link from '../components/Link'
 import BlogCard from '../components/BlogCard'
 import Layout from '../components/Layout'
 import Img from 'gatsby-image'
+import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+
+const Pagination = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4em;
+`
+
+const Body = styled.div`
+  display: flex;
+`
+
+const StyledLink = styled(Link)`
+  font-size: 16px;
+  margin-left: 1em;
+  color: ${props => props.theme.color.blue};
+  
+  &:hover {
+    color: ${props => props.theme.color.blue};
+  }
+`
+
+const PostsContainer = styled.div`
+`
+
+const SideCard = styled.div`
+  flex-shrink: 0;
+  width: 40%;
+  padding-left: 60px;
+  box-sizing: border-box;
+`
+
+const StyledImg = styled(Img)`
+`
+
+const ImgContainer = styled.div`
+  width: 100%;
+  height: 400px;
+  display: flex;
+  background-color: #f8f8f8;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`
+
+const ImgText = styled.div`
+  margin-left: 18px;
+  font-family: serif;
+`
 
 export default ({ data, pageContext }) => {
   const posts = data.allMdx.edges
   const image = data.file.childImageSharp
   const { numPages, currentPage } = pageContext
 
-  const articles = [
-    'JavaScript小技巧 - 数组篇',
-    '2011年12月24日只言片语',
-    '2011年12月25日只言片语',
-    '2011年12月26日只言片语'
-  ]
-
   return <Layout>
-    <Helmet title="Sean Dong的个人博客"/>
-    <div className="flex">
-      <div>
+    <Helmet title="进击的大葱的个人博客"/>
+    <Body>
+      <PostsContainer>
         {
           posts.map(({
             node: {
@@ -46,32 +91,21 @@ export default ({ data, pageContext }) => {
             />
           })
         }
-        <div>
-          {currentPage !== 1 && <Link to={currentPage === 2 ? `/` : `/blogs/${currentPage - 1}`}>上一页</Link>}
-          {currentPage !== numPages && <Link to={`/blogs/${currentPage + 1}`}>下一页</Link>}
-        </div>
-      </div>
-      <div className="flex-shrink-0 w-1/4 pl-8">
-        <div>
-          <div className="text-gray-500 text-xl">热门文章</div>
-          {
-            articles.map(article => 
-              <div key={article} className="text-gray-600 text-lg hover:text-gray-900 mt-2">
-                {article}
-              </div>
-            )
-          }
-        </div>
-        <div>
-          <Img
-            className="transform -translate-x-4 mt-4"
+        <Pagination>
+          {currentPage !== 1 && <StyledLink to={currentPage === 2 ? `/` : `/blogs/${currentPage - 1}`}><FontAwesomeIcon icon={faAngleLeft}/>上一页</StyledLink>}
+          {currentPage !== numPages && <StyledLink to={`/blogs/${currentPage + 1}`}>下一页</StyledLink>}
+        </Pagination>
+      </PostsContainer>
+      <SideCard>
+        <ImgContainer>
+          <StyledImg
             fixed={image.fixed}
             alt="headshot"
           />
-          <div className="text-gray-700">关注我的公众号</div>
-        </div>
-      </div>
-    </div>
+          <ImgText>关注我的公众号</ImgText>
+        </ImgContainer>
+      </SideCard>
+    </Body>
   </Layout>
 }
 

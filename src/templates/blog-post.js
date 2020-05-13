@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import { graphql } from 'gatsby'
 // import styled from 'styled-components'
 // import tw from 'twin.macro'
@@ -7,10 +8,21 @@ import Layout from '../components/Layout'
 import { MDXProvider } from '@mdx-js/react'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 
-import { Header1, Header2, Header3 } from '../components/MD/Header'
 import CodeBlock from '../components/MD/CodeBlock'
-import { UL, LI } from '../components/MD/List'
-import P from '../components/MD/P'
+import Link from '../components/MD/Link'
+import StyledLink from '../components/Link'
+
+const NavLink = styled(StyledLink)`
+  margin-right: 1em;
+  color: ${props => props.theme.color.blue};
+`
+
+const Footer = styled.div`
+  margin-top: 2em;
+  margin-bottom: 2em;
+  display: flex;
+  justify-content: space-between;
+`
 
 export default ({ data, pageContext }) => {
   const post = data.mdx
@@ -18,21 +30,17 @@ export default ({ data, pageContext }) => {
   const { prev, next } = pageContext
   return <Layout>
     <Helmet title={post.frontmatter.title}/>
-    <h1 className="font-bold text-4xl">{post.frontmatter.title}</h1>
+    <h1>{post.frontmatter.title}</h1>
     <div>
-      {/* <div
-        className="markdown flex-grow"
-        dangerouslySetInnerHTML={{ __html: post.html}}
-      /> */}
       <MDXProvider
         components={{
-          h1: Header1,
-          h2: Header2,
-          h3: Header3,
-          ul: UL,
-          li: LI,
+          // h1: Header1,
+          // h2: Header2,
+          // h3: Header3,
+          // ul: UL,
+          // li: LI,
           code: CodeBlock,
-          p: P
+          a: Link
         }}
       >
         <MDXRenderer
@@ -41,10 +49,10 @@ export default ({ data, pageContext }) => {
         </MDXRenderer>
       </MDXProvider>
     </div>
-    <div className="flex mt-1">
-      {prev && <div>{prev.frontmatter.title}</div>}
-      {next && <div>{next.frontmatter.title}</div>}
-    </div>
+    <Footer>
+      {prev && <NavLink to={prev.fields.slug}>上一篇：{prev.frontmatter.title}</NavLink>}
+      {next && <NavLink to={next.fields.slug}>下一篇：{next.frontmatter.title}</NavLink>}
+    </Footer>
   </Layout>
 }
 

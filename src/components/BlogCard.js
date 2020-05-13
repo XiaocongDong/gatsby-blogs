@@ -1,18 +1,47 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import Link from '../components/Link'
 import styled from 'styled-components'
-import tw from 'twin.macro'
 
 const Card = styled.div`
-  ${tw`mb-12`}
+  margin-bottom: 2em;
 `
 
 const StyledTitle = styled(Link)`
-  ${tw`text-3xl font-bold`}
+  font-size: 36px;
+  text-decoration: none;
+  color: black;
 `
 
 const StyledExcerpt = styled.p`
-  ${tw`text-xl text-gray-700 mb-4`}
+  color: #555;
+  font-size: 24px;
+  line-height: 1.8;
+`
+
+const StyledBody = styled.div`
+  display: flex;
+  color: #777;
+  padding: 10px 0;
+  font-size: 20px;
+`
+
+const StyledDate = styled.div`
+  margin-right: 1em;
+`
+
+const StyledLink = styled(Link)`
+  margin-right: 0.6em;
+  color: #333;
+  text-decoration: underline;
+
+  &:hover {
+    color: #000;
+  }
+
+  &::before{
+    content: '#';
+    text-decoration: none;
+  }
 `
 
 export default ({ slug, title, date, excerpt, tags }) => {
@@ -21,14 +50,12 @@ export default ({ slug, title, date, excerpt, tags }) => {
   return (
     <Card>
       <StyledTitle to={slug}>{title}</StyledTitle>
-      <div className="flex text-gray-500 pt-2 pb-1">
-        <div className="mr-2">{date}</div>
-        <div className="flex">
-        </div>
+      <StyledBody>
+        <StyledDate>{date}</StyledDate>
         {
-          tags.map(tag => <Link key={tag} className="mr-1" to={`/tags/${tag}`}>#{tag}</Link>)
+          tags.map(tag => <StyledLink key={tag} to={`/tags/${tag}`}>{tag}</StyledLink>)
         }
-      </div>
+      </StyledBody>
       <StyledExcerpt
         dangerouslySetInnerHTML={{__html: excerpt}}
       />
