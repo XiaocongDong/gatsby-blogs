@@ -40,6 +40,8 @@ const SideCard = styled.div`
 `
 
 const StyledImg = styled(Img)`
+  width: 100px;
+  height: 100px;
 `
 
 const ImgContainer = styled.div`

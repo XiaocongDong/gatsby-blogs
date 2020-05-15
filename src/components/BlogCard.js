@@ -7,14 +7,14 @@ const Card = styled.div`
 `
 
 const StyledTitle = styled(Link)`
-  font-size: 36px;
+  font-size: 32px;
   text-decoration: none;
   color: black;
 `
 
 const StyledExcerpt = styled.p`
   color: #555;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 1.8;
 `
 
@@ -22,7 +22,7 @@ const StyledBody = styled.div`
   display: flex;
   color: #777;
   padding: 10px 0;
-  font-size: 20px;
+  font-size: 16px;
 `
 
 const StyledDate = styled.div`

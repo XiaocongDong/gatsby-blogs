@@ -10,7 +10,7 @@ const Content = styled.div`
 
 const Header = styled.header`
   padding: 0 10vw;
-  height: 70px;
+  height: 100px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -33,8 +33,8 @@ const Title = styled(Link)`
 
 const StyledContent = styled.div`
   padding: 0 10vw;
-  padding-top: 100px;
-  min-height: calc(100% - 200px);
+  padding-top: 140px;
+  min-height: calc(100% - 168px);
   box-sizing: border-box;
   padding-bottom: 50px;
 `
@@ -49,9 +49,9 @@ const Nav = styled(Link)`
 `
 
 const Footer = styled.div`
-  font-size: 18px;
+  font-size: 14px;
   border-top: 1px solid #eceff2;
-  height: 200px;
+  height: 168px;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;

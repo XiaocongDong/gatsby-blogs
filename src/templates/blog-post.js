@@ -12,9 +12,15 @@ import CodeBlock from '../components/MD/CodeBlock'
 import Link from '../components/MD/Link'
 import StyledLink from '../components/Link'
 
+import Img from 'gatsby-image'
+
 const NavLink = styled(StyledLink)`
   margin-right: 1em;
-  color: ${props => props.theme.color.blue};
+  background: #f3f3f3;
+  padding: 8px 18px;
+  color: #333;
+  font-size: 16px;
+  border-radius: 8px;
 `
 
 const Footer = styled.div`
@@ -24,34 +30,92 @@ const Footer = styled.div`
   justify-content: space-between;
 `
 
+const Title = styled.h1`
+  font-size: 50px;
+  font-weight: 400;
+  margin-bottom: 128px;
+  margin-top: 18px;
+`
+
+const Content = styled.div`
+  display: flex;
+`
+
+const Left = styled.div`
+  flex-shrink: auto;
+  flex-grow: 1;
+  width: 60%;
+`
+
+const Right = styled.div`
+  flex-shrink: 0;
+  width: 40%;
+  padding-left: 60px;
+  box-sizing: border-box;
+`
+
+const StyledImg = styled(Img)`
+  width: 100px;
+  height: 100px;
+`
+
+const ImgContainer = styled.div`
+  width: 100%;
+  height: 400px;
+  display: flex;
+  background-color: #f8f8f8;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`
+
+const ImgText = styled.div`
+  margin-left: 18px;
+  font-family: serif;
+`
+
 export default ({ data, pageContext }) => {
   const post = data.mdx
+  const image = data.file.childImageSharp
 
   const { prev, next } = pageContext
   return <Layout>
     <Helmet title={post.frontmatter.title}/>
-    <h1>{post.frontmatter.title}</h1>
-    <div>
-      <MDXProvider
-        components={{
-          // h1: Header1,
-          // h2: Header2,
-          // h3: Header3,
-          // ul: UL,
-          // li: LI,
-          code: CodeBlock,
-          a: Link
-        }}
-      >
-        <MDXRenderer
-        >
-          {post.body}
-        </MDXRenderer>
-      </MDXProvider>
-    </div>
+    <Title>{post.frontmatter.title}</Title>
+    <Content>
+      <Left>
+        <div className="markdown-body">
+          <MDXProvider
+            components={{
+              // h1: Header1,
+              // h2: Header2,
+              // h3: Header3,
+              // ul: UL,
+              // li: LI,
+              code: CodeBlock,
+              a: Link
+            }}
+          >
+            <MDXRenderer
+            >
+              {post.body}
+            </MDXRenderer>
+          </MDXProvider>
+        </div>
+      </Left>
+      <Right>
+        <ImgContainer>
+          <StyledImg
+            fixed={image.fixed}
+            alt="headshot"
+          />
+          <ImgText>关注我的公众号</ImgText>
+        </ImgContainer>
+      </Right>
+    </Content>
     <Footer>
-      {prev && <NavLink to={prev.fields.slug}>上一篇：{prev.frontmatter.title}</NavLink>}
-      {next && <NavLink to={next.fields.slug}>下一篇：{next.frontmatter.title}</NavLink>}
+      {prev && <NavLink to={prev.fields.slug}>&laquo; 上一篇：{prev.frontmatter.title}</NavLink>}
+      {next && <NavLink to={next.fields.slug}>下一篇：{next.frontmatter.title} &raquo;</NavLink>}
     </Footer>
   </Layout>
 }
@@ -65,6 +129,13 @@ export const query = graphql`
         date
       }
       body
+    }
+    file(relativePath: {eq: "etc/wechat_qr.jpg"}) {
+      childImageSharp {
+        fixed(width: 240, height: 240) {
+          ...GatsbyImageSharpFixed
+        }
+      }
     }
   }
 `
