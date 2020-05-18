@@ -11,7 +11,6 @@ thumbnail: /gallery/thumbnails/react-hook.jpg
 
 自从React 16.8发布Hook之后，笔者已经在实际项目中使用Hook快一年了，虽然Hook在使用中存在着一些坑，但是总的来说它是一个很好的功能，特别是在减少模板代码和提高代码复用率这些方面特别有用。为了让更多的人了解和使用Hook，我决定写一系列和Hook相关的文章，**本篇文章就是这个系列的第一篇**，主要和大家聊一下**React为什么需要Hook**。
 
-<!-- more -->
 ## Hook解决的问题
 ### Component非UI逻辑复用困难
 对于React或者其它的基于Component的框架来说，页面是由一个个UI组件构成的。独立的组件可以在同一个项目中甚至不同项目中进行复用，这十分有利于前端开发效率的提高。可是除了UI层面上的复用，一些**状态相关**（stateful）或者**副作用相关**（side effect）的**非UI逻辑**在不同组件之间复用起来却十分困难。对于React来说，你可以使用[高阶组件](https://reactjs.org/docs/higher-order-components.html)（High-order Component）或者[renderProps](https://reactjs.org/docs/render-props.html)的方法来复用这些逻辑，可是这两种方法都不是很好，存在各种各样的问题。如果你之前没有复用过这些非UI逻辑的话，我们可以先来看一个高阶组件的例子。
@@ -116,7 +115,7 @@ export default withUserStatus(UserDetail)
 * **高阶组件的开发对开发者不友好**：开发者（特别是初级开发者）需要花费一段时间才能搞懂其中的原理并且适应它的写法。如果你使用高阶组件已经很久了，你看到这个说法可能会有些不以为然。可是我相信你在最开始接触高阶组件的时候肯定也花了一段时间才能搞懂它的原理，而且从上面的例子来看高阶组件其实是十分笨重的。试想一下，某天你的项目来了一个React新手，估计他也得花费一段时间才能理解你写的那些高阶组件代码吧。
 * **高阶组件之间组合性差**：使用过高阶组件的同学一定试过由于要为组件添加不同的功能，我们要为同一个组件嵌套多个高阶组件，例如这样的代码：`withAuth(withRouter(withUserStatus(UserDetail)))`。这种嵌套写法的高阶组件可能会导致很多问题，其中一个就是props丢失的问题，例如withAuth传递给UserDetail的某个prop可能在withUserStatus组件里面丢失或者被覆盖了。如果你使用的高阶组件都是自己写的话还好，因为调试和修改起来都比较简单，如果你使用的是第三方的库的话就很头痛了。
 * **容易发生wrapper hell**：这个问题在上面嵌套多重高阶组件的时候就会出现，具体会造成我们在React Devtools查看和调试某个组件的时候十分困难。我们可以看幅图片来感受一下：
-![](/images/react-hook/wrapper-hell.jpg)
+![](../images/blogs/react-hook/wrapper-hell.jpg)
 这真是高阶组件一时爽，出问题就火葬场的感觉有没有。
 
 和高阶组件类似，renderProps也会存在同样的问题。基于这些原因，React需要一个**新的用来复用组件之间非UI逻辑的方法**，所以Hook就这么诞生了。总的来说，Hook相对于高阶组件和renderProps在复用代码逻辑方面有以下的优势：

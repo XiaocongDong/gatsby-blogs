@@ -11,6 +11,10 @@ import { MDXRenderer } from 'gatsby-plugin-mdx'
 import CodeBlock from '../components/MD/CodeBlock'
 import Link from '../components/MD/Link'
 import StyledLink from '../components/Link'
+import { H1, H2, H3, H4, H5, H6 } from '../components/MD/Header'
+import P from '../components/MD/P'
+import Image from '../components/MD/Image'
+import { LI, OL, UL } from '../components/MD/List'
 
 import Img from 'gatsby-image'
 
@@ -45,6 +49,7 @@ const Left = styled.div`
   flex-shrink: auto;
   flex-grow: 1;
   width: 60%;
+  font-size: 20px;
 `
 
 const Right = styled.div`
@@ -87,11 +92,17 @@ export default ({ data, pageContext }) => {
         <div className="markdown-body">
           <MDXProvider
             components={{
-              // h1: Header1,
-              // h2: Header2,
-              // h3: Header3,
-              // ul: UL,
-              // li: LI,
+              h1: H1,
+              h2: H2,
+              h3: H3,
+              h4: H4,
+              h5: H5,
+              h6: H6,
+              p: P,
+              li: LI,
+              ul: UL,
+              ol: OL,
+              img: Image,
               code: CodeBlock,
               a: Link
             }}
