@@ -9,6 +9,7 @@ import { MDXProvider } from '@mdx-js/react'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 
 import CodeBlock from '../components/MD/CodeBlock'
+import TableOfContents from '../components/TableOfContent'
 import Link from '../components/MD/Link'
 import StyledLink from '../components/Link'
 import { H1, H2, H3, H4, H5, H6 } from '../components/MD/Header'
@@ -57,6 +58,9 @@ const Right = styled.div`
   width: 40%;
   padding-left: 60px;
   box-sizing: border-box;
+  position: sticky;
+  top: 150px;
+  height: 100%;
 `
 
 const StyledImg = styled(Img)`
@@ -72,6 +76,7 @@ const ImgContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 `
 
 const ImgText = styled.div`
@@ -82,13 +87,13 @@ const ImgText = styled.div`
 export default ({ data, pageContext }) => {
   const post = data.mdx
   const image = data.file.childImageSharp
-
+  console.log(post)
   const { prev, next } = pageContext
   return <Layout>
     <Helmet title={post.frontmatter.title}/>
-    <Title>{post.frontmatter.title}</Title>
     <Content>
       <Left>
+        <Title>{post.frontmatter.title}</Title>
         <div className="markdown-body">
           <MDXProvider
             components={{
@@ -113,8 +118,15 @@ export default ({ data, pageContext }) => {
             </MDXRenderer>
           </MDXProvider>
         </div>
+        <Footer>
+          {prev && <NavLink to={prev.fields.slug}>&laquo; 上一篇：{prev.frontmatter.title}</NavLink>}
+          {next && <NavLink to={next.fields.slug}>下一篇：{next.frontmatter.title} &raquo;</NavLink>}
+      </Footer>
       </Left>
       <Right>
+        <TableOfContents
+          items={post.tableOfContents.items}
+        />
         <ImgContainer>
           <StyledImg
             fixed={image.fixed}
@@ -124,10 +136,6 @@ export default ({ data, pageContext }) => {
         </ImgContainer>
       </Right>
     </Content>
-    <Footer>
-      {prev && <NavLink to={prev.fields.slug}>&laquo; 上一篇：{prev.frontmatter.title}</NavLink>}
-      {next && <NavLink to={next.fields.slug}>下一篇：{next.frontmatter.title} &raquo;</NavLink>}
-    </Footer>
   </Layout>
 }
 
@@ -140,6 +148,7 @@ export const query = graphql`
         date
       }
       body
+      tableOfContents
     }
     file(relativePath: {eq: "etc/wechat_qr.jpg"}) {
       childImageSharp {

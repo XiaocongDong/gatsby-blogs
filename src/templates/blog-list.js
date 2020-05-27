@@ -52,6 +52,8 @@ const ImgContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  position: sticky;
+  top: 200px;
 `
 
 const ImgText = styled.div`
