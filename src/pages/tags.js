@@ -5,16 +5,17 @@ import Link from '../components/Link'
 import styled from 'styled-components'
 
 const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `
 
 const StyledLink = styled(Link)`
-  background-color: ${props => props.theme.color.blue};
-  color: white;
-  border-radius: 2px;
-  padding: 2px;
-  margin-right: 2px;
+  background-color: #f8f8f8;
+  border-radius: 15px;
+  padding: 10px;
+  margin: 10px 6px;
+  color: #999;
 `
-
 export default ({ data }) => {
   const { tags } = data
 
@@ -22,7 +23,7 @@ export default ({ data }) => {
     <Container>
       {
         tags.group.map(tag => <StyledLink key={tag.name} to={`/tags/${tag.name}`}>
-          {tag.name}: {tag.totalCount}
+          {tag.name} ({tag.totalCount})
         </StyledLink>
         )
       }  

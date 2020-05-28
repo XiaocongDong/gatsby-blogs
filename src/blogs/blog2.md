@@ -1,6 +1,8 @@
 ---
 title: "2011年12月24日只言片语"
 date: "2017-08-10"
+categories:
+  - JavaScript
 tags:
   - abc
 ---

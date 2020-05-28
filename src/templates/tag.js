@@ -8,7 +8,7 @@ export default ({ pageContext }) => {
 
   return (
     <Layout>
-      <h2>关于{tagName}的标签有{len}个</h2>
+      <h2>标签：{tagName}</h2>
       <div>
         {
           posts.map(post => {

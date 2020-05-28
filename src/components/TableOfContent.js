@@ -11,19 +11,15 @@ const StyledTitle = styled.div`
   font-size: 30px;
 `
 
-const fontSizes = [18, 14, 10]
 const padding = 10
 
 const Item = ({ title, url, level, items = [] }) => {
-  const fontSize = fontSizes[level]
-
   return <div
     style={{
       paddingLeft: `${level * padding}px`,
       margin: '10px 0',
-      fontWeight: level === 0 ? 'bold' : 400,
     }}>
-    <div style={{fontSize: `${fontSize}px`}}>{title}</div>
+    <div style={{fontSize: '16px'}}>{title}</div>
     <div>
       {
         items.map(({ title, url, items }) => {
