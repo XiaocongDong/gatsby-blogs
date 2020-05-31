@@ -55,6 +55,62 @@ const createCategoryPages = (createPage, posts) => {
   })
 }
 
+const createAchievesPages = (createPage, posts) => {
+  const blogsPerPage = 10
+  const totalPage = posts.length
+  const pages = [[]]
+
+  let counter = 1
+  for (let i = 0; i < totalPage; i++) {
+    if (counter > blogsPerPage) {
+      counter = 1
+      pages.push([])
+    }
+    pages[pages.length - 1].push(posts[i])
+    counter++
+  }
+
+  const achievedPages = []
+  for (let i = 0; i < pages.length; i++) {
+    const pageAchievedBlogs = []
+    const pageBlogs = pages[i]
+    if (pageBlogs.length == 0) {
+      break
+    }
+
+    for (let j = 0; j < pageBlogs.length; j++) {
+      const pageBlog = pageBlogs[j]
+      const blogYear = new Date(pageBlog.node.frontmatter.date).getFullYear()
+    
+      if (pageAchievedBlogs.length == 0) {
+        pageAchievedBlogs.push({year: blogYear, blogs: []})
+      }
+
+      let currentAchievedBlogs = pageAchievedBlogs[pageAchievedBlogs.length - 1]
+      if (currentAchievedBlogs.year == blogYear) {
+        currentAchievedBlogs.blogs.push(pageBlog)
+      } else {
+        currentAchievedBlogs = {year: blogYear, blogs: [pageBlog]}
+        pageAchievedBlogs.push(currentAchievedBlogs)
+      }
+    }
+
+    achievedPages.push(pageAchievedBlogs)
+  }
+
+  achievedPages.forEach((pageAchievedBlogs, index) => {
+    createPage({
+      path: index === 0 ? `/achieves` : `achieves/${index + 1}`,
+      component: path.resolve(`./src/templates/achieve.js`),
+      context: {
+        achievedYearBlogs: pageAchievedBlogs,
+        currentPage: index + 1,
+        totalPage: pages.length
+      }
+    })
+  })
+}
+
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
 
@@ -92,7 +148,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const result = await graphql(`
     query {
-      allMdx {
+      allMdx(sort: {fields: [frontmatter___date], order: DESC}) {
         edges {
           node {
             id
@@ -100,6 +156,7 @@ exports.createPages = async ({ graphql, actions }) => {
               title
               tags
               categories
+              date
             }
             fields {
               slug
@@ -146,7 +203,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // generate tag detail page
   createTagPages(createPage, blogs)
-
   // generate category detail page
   createCategoryPages(createPage, blogs)
+  // generate achieve page
+  createAchievesPages(createPage, blogs)
 }

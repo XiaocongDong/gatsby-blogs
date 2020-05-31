@@ -46,6 +46,7 @@ const LinkList = styled.ul`
 const Nav = styled(Link)`
   margin: 0 1em;
   color: #777;
+  text-transform: uppercase;
 `
 
 const Footer = styled.div`
@@ -78,10 +79,11 @@ export default ({ children }) => {
             进击的大葱
           </Title>
           <LinkList>
-            <Nav to="/">博客</Nav>
-            <Nav to="/categories">分类</Nav>
-            <Nav to="/tags">标签</Nav>
-            <Nav to="/about">关于</Nav>
+            <Nav to="/">Blogs</Nav>
+            <Nav to="/categories">Categories</Nav>
+            <Nav to="/tags">Tags</Nav>
+            <Nav to="/achieves">Achieves</Nav>
+            <Nav to="/about">About</Nav>
           </LinkList>
         </Header>
         <StyledContent>
