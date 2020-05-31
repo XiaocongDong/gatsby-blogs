@@ -20,15 +20,20 @@ const StyledLink = styled(Link)`
 `
 
 export default ({ pageContext }) => {
-  const { posts, tagName } = pageContext
+  const { posts, categoryName } = pageContext
 
   return (
     <Layout>
-      <h2>标签：{tagName}</h2>
+      <h2>分类：{categoryName}</h2>
       <List>
         {
           posts.map(post => {
-            return <StyledLink key={post.id} to={post.fields.slug}>{post.frontmatter.title}</StyledLink>
+            return <StyledLink
+              key={post.id}
+              to={post.fields.slug}
+            >
+              {post.frontmatter.title}
+            </StyledLink>
           })
         }
       </List>

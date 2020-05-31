@@ -77,7 +77,8 @@ export default ({ data, pageContext }) => {
               frontmatter: {
                 title,
                 date,
-                tags
+                tags,
+                categories
               },
               fields: { 
                 slug 
@@ -92,6 +93,7 @@ export default ({ data, pageContext }) => {
               date={date}
               excerpt={excerpt}
               tags={tags}
+              categories={categories}
             />
           })
         }
@@ -129,6 +131,7 @@ export const query = graphql`
             title
             date(formatString: "YYYY-MM-DD")
             tags
+            categories
           }
           excerpt
         }

@@ -79,6 +79,7 @@ export default ({ children }) => {
           </Title>
           <LinkList>
             <Nav to="/">博客</Nav>
+            <Nav to="/categories">分类</Nav>
             <Nav to="/tags">标签</Nav>
             <Nav to="/about">关于</Nav>
           </LinkList>

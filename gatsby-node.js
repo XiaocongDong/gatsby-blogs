@@ -28,6 +28,33 @@ const createTagPages = (createPage, posts) => {
   })
 }
 
+const createCategoryPages = (createPage, posts) => {
+  const categoryTemplate = path.resolve(`./src/templates/category.js`)
+  const postsMap = {}
+
+  posts.forEach(({ node }) => {
+    if (node.frontmatter.categories) {
+      node.frontmatter.categories.forEach(category => {
+        if (!postsMap[category]) {
+          postsMap[category] = []
+        }
+        postsMap[category].push(node)
+      })
+    }
+  })
+
+  Object.keys(postsMap).forEach(categoryName => {
+    createPage({
+      path: `/categories/${categoryName}`,
+      component: categoryTemplate,
+      context: {
+        posts: postsMap[categoryName],
+        categoryName
+      }
+    })
+  })
+}
+
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
 
@@ -72,6 +99,7 @@ exports.createPages = async ({ graphql, actions }) => {
             frontmatter {
               title
               tags
+              categories
             }
             fields {
               slug
@@ -118,4 +146,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   // generate tag detail page
   createTagPages(createPage, blogs)
+
+  // generate category detail page
+  createCategoryPages(createPage, blogs)
 }

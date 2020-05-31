@@ -29,10 +29,9 @@ const StyledDate = styled.div`
   margin-right: 1em;
 `
 
-const StyledLink = styled(Link)`
+const TagLink = styled(Link)`
   margin-right: 0.6em;
   color: #333;
-  text-decoration: underline;
 
   &:hover {
     color: #000;
@@ -44,8 +43,19 @@ const StyledLink = styled(Link)`
   }
 `
 
-export default ({ slug, title, date, excerpt, tags }) => {
+const CategoryLink = styled(Link)`
+  margin-right: 0.6em;
+  color: #333;
+  text-decoration: underline;
+
+  &:hover {
+    color: #000;
+  }
+`
+
+export default ({ slug, title, date, excerpt, tags, categories }) => {
   tags = tags || []
+  categories = categories || []
 
   return (
     <Card>
@@ -53,7 +63,10 @@ export default ({ slug, title, date, excerpt, tags }) => {
       <StyledBody>
         <StyledDate>{date}</StyledDate>
         {
-          tags.map(tag => <StyledLink key={tag} to={`/tags/${tag}`}>{tag}</StyledLink>)
+          categories.map(category => <CategoryLink key={category} to={`/categories/${category}`}>{category}</CategoryLink>)
+        }
+        {
+          tags.map(tag => <TagLink key={tag} to={`/tags/${tag}`}>{tag}</TagLink>)
         }
       </StyledBody>
       <StyledExcerpt

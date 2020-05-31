@@ -87,8 +87,8 @@ const ImgText = styled.div`
 export default ({ data, pageContext }) => {
   const post = data.mdx
   const image = data.file.childImageSharp
-  console.log(post)
   const { prev, next } = pageContext
+
   return <Layout>
     <Helmet title={post.frontmatter.title}/>
     <Content>

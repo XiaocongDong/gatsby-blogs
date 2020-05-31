@@ -1,6 +1,8 @@
 ---
 title: "2011年12月24日只言片语ss"
 date: "2017-08-10"
+categories:
+  - linux
 tags:
   - abc
 ---
